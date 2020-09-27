@@ -3,6 +3,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  overflow-y: hidden;
 }
 
 html {
@@ -128,6 +129,50 @@ main .icons-container a:hover {
 .error-loading-container div a:hover {
   background: rgba(0, 0, 0, 0.8);
   color: lightgray;
+}
+
+/* GAME CONTAINER */
+.game-container {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-container .sol-info {
+  padding: 20px 0 0 20px;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.game-container .sol-info p {
+  font-weight: 600;
+  color: lightgray;
+  font-size: 1.4rem;
+  margin: 0 0 10px 0;
+}
+.game-container #hands {
+  pointer-events: none;
+  position: absolute;
+  bottom: -100px;
+  width: 40%;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.game-container .object-spawner-container {
+  width: 100%;
+  height: 50vh;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
 }
 
 /* ANIMATIONS */
