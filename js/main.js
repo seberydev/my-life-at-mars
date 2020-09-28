@@ -13,6 +13,15 @@ const dataController = (() => {
 		bottle: {
 			url: "./img/bottle.svg",
 		},
+		water: {
+			url: "./img/water.svg",
+		},
+		shield: {
+			url: "./img/shield.svg",
+		},
+		littleAlien: {
+			url: "./img/littleAlien.svg",
+		},
 	};
 
 	return {
@@ -37,6 +46,36 @@ const UIController = (() => {
 		gameContainer: ".game-container",
 		solInfoE: ".game-container .sol-info",
 		spawnContainer: ".game-container .object-spawner-container",
+		handsE: "hands",
+		handsAnim: "move-hands",
+	};
+
+	let hands = document.getElementById(DOMStrings.handsE);
+
+	const spawn = (data) => {
+		let spawnContainer = document.querySelector(DOMStrings.spawnContainer);
+		let object = document.createElement("img");
+		let randomPosX = Math.floor(Math.random() * 60) + 20; //20% - 80%;
+		let randomPosY = Math.floor(Math.random() * 30) + 10; //10% - 40%
+		let randomKey = Object.keys(data)[
+			Math.floor(Math.random() * Object.keys(data).length)
+		];
+
+		object.src = data[randomKey].url;
+		object.style.position = "absolute";
+		object.style.width = "40px";
+		object.style.left = `${randomPosX}%`;
+		object.style.top = `${randomPosY}%`;
+		object.style.cursor = "pointer";
+		object.addEventListener("click", (e) => {
+			e.target.parentNode.removeChild(e.target);
+			hands.classList.add("move-hands");
+			setTimeout(() => {
+				hands.classList.remove("move-hands");
+			}, 1000);
+		});
+
+		spawnContainer.appendChild(object);
 	};
 
 	return {
@@ -69,19 +108,9 @@ const UIController = (() => {
 			container.appendChild(fragment);
 		},
 		spawnObject: (data) => {
-			let spawnContainer = document.querySelector(DOMStrings.spawnContainer);
-			let object = document.createElement("img");
-			object.src = data.bottle.url;
-			object.style.position = "absolute";
-			object.style.width = "40px";
-			object.style.left = "50%";
-			object.style.top = "0";
-			object.style.cursor = "pointer";
-			object.addEventListener("click", (e) => {
-				e.target.parentNode.removeChild(e.target);
-			});
-
-			spawnContainer.appendChild(object);
+			setInterval(() => {
+				spawn(data);
+			}, 4000);
 		},
 	};
 })();
@@ -104,6 +133,7 @@ const controller = ((UI, DATA) => {
 			body.style.backgroundSize = "180px 180px";
 			gameContainer.style.display = "block";
 			UI.setMarsDataUI(marsData);
+			UI.spawnObject(objectsData);
 		});
 	};
 
@@ -125,7 +155,6 @@ const controller = ((UI, DATA) => {
 			UI.UIinit();
 			addEvents();
 			getCurrentData();
-			UI.spawnObject(objectsData);
 		},
 	};
 })(UIController, dataController);
