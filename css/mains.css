@@ -140,6 +140,7 @@ main .icons-container a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* PLAYER GAME INFO */
 }
 .game-container .sol-info {
   padding: 20px 0 0 20px;
@@ -174,6 +175,56 @@ main .icons-container a:hover {
   top: 0;
   left: 0;
 }
+.game-container .player-game-info {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.game-container .player-game-info div {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 10px 0;
+}
+.game-container .player-game-info div label {
+  margin: 0 5px;
+}
+.game-container .player-game-info div label img {
+  height: 16px;
+  width: auto;
+}
+.game-container .player-game-info div progress {
+  min-width: 250px;
+  height: 16px;
+  border: none;
+  border-radius: 5px;
+  background: lightgray;
+}
+.game-container .player-game-info div #foodProgress::-moz-progress-bar,
+.game-container .player-game-info div #waterProgress::-webkit-progress-bar {
+  background: #bfca27;
+  border-radius: 5px;
+}
+.game-container .player-game-info div #waterProgress::-moz-progress-bar,
+.game-container .player-game-info div #waterProgress::-webkit-progress-bar {
+  background: #276eca;
+  border-radius: 5px;
+}
+.game-container .player-game-info div #healthProgress::-moz-progress-bar,
+.game-container .player-game-info div #healthProgress::-webkit-progress-bar {
+  background: #ca2727;
+  border-radius: 5px;
+}
 
 /* ANIMATIONS */
 @keyframes loading {
@@ -195,12 +246,31 @@ main .icons-container a:hover {
     bottom: -100px;
   }
 }
+@keyframes deleteElement {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 /* CUSTOM CLASSES */
 .move-hands {
   animation-name: moveHands;
   animation-duration: 1s;
   animation-timing-function: linear;
   animation-iteration-count: 1;
+}
+
+.delete-element {
+  animation-name: deleteElement;
+  animation-duration: 20s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 /*# sourceMappingURL=mains.css.map */

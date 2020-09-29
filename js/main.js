@@ -12,15 +12,27 @@ const dataController = (() => {
 	const objectsData = {
 		bottle: {
 			url: "./img/bottle.svg",
+			w: "40px",
 		},
 		water: {
 			url: "./img/water.svg",
+			w: "60px",
 		},
 		shield: {
 			url: "./img/shield.svg",
+			w: "60px",
 		},
 		littleAlien: {
 			url: "./img/littleAlien.svg",
+			w: "100px",
+		},
+		bigAlien: {
+			url: "./img/bigAlien.svg",
+			w: "100px",
+		},
+		box: {
+			url: "./img/box.svg",
+			w: "40px",
 		},
 	};
 
@@ -48,6 +60,7 @@ const UIController = (() => {
 		spawnContainer: ".game-container .object-spawner-container",
 		handsE: "hands",
 		handsAnim: "move-hands",
+		deleteE: "delete-element",
 	};
 
 	let hands = document.getElementById(DOMStrings.handsE);
@@ -63,10 +76,12 @@ const UIController = (() => {
 
 		object.src = data[randomKey].url;
 		object.style.position = "absolute";
-		object.style.width = "40px";
+		object.style.width = data[randomKey].w;
 		object.style.left = `${randomPosX}%`;
 		object.style.top = `${randomPosY}%`;
 		object.style.cursor = "pointer";
+
+		//HANDS ANIMATION
 		object.addEventListener("click", (e) => {
 			e.target.parentNode.removeChild(e.target);
 			hands.classList.add("move-hands");
@@ -75,6 +90,12 @@ const UIController = (() => {
 			}, 1000);
 		});
 
+		//REMOVE ELEMENT
+		object.addEventListener("animationend", (e) => {
+			e.target.parentNode.removeChild(e.target);
+		});
+
+		object.classList.add(DOMStrings.deleteE);
 		spawnContainer.appendChild(object);
 	};
 

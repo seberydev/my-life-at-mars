@@ -156,6 +156,65 @@ main {
 		top: 0;
 		left: 0;
 	}
+
+	/* PLAYER GAME INFO */
+	.player-game-info {
+		background: rgba(0, 0, 0, 0.3);
+		border-radius: 5px;
+		padding: 10px;
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+		pointer-events: none;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		div {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			margin: 10px 0;
+
+			label {
+				margin: 0 5px;
+
+				img {
+					height: 16px;
+					width: auto;
+				}
+			}
+
+			progress {
+				min-width: 250px;
+				height: 16px;
+				border: none;
+				border-radius: 5px;
+				background: lightgray;
+			}
+
+			#foodProgress::-moz-progress-bar,
+			#waterProgress::-webkit-progress-bar {
+				background: #bfca27;
+				border-radius: 5px;
+			}
+
+			#waterProgress::-moz-progress-bar,
+			#waterProgress::-webkit-progress-bar {
+				background: #276eca;
+				border-radius: 5px;
+			}
+
+			#healthProgress::-moz-progress-bar,
+			#healthProgress::-webkit-progress-bar {
+				background: #ca2727;
+				border-radius: 5px;
+			}
+		}
+	}
 }
 
 /* ANIMATIONS */
@@ -183,10 +242,32 @@ main {
 	}
 }
 
+@keyframes deleteElement {
+	0% {
+		opacity: 1;
+	}
+
+	90% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
 /* CUSTOM CLASSES */
 .move-hands {
 	animation-name: moveHands;
 	animation-duration: 1s;
 	animation-timing-function: linear;
 	animation-iteration-count: 1;
+}
+
+.delete-element {
+	animation-name: deleteElement;
+	animation-duration: 20s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
 }
