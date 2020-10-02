@@ -13,27 +13,79 @@ const dataController = (() => {
 		bottle: {
 			url: "./img/bottle.svg",
 			w: "40px",
+			do: () => {
+				playerData.food += 3;
+				if (playerData.food > 100) playerData.food = 100;
+			},
 		},
 		water: {
 			url: "./img/water.svg",
 			w: "60px",
+			do: () => {
+				playerData.water += 6;
+				if (playerData.water > 100) playerData.water = 100;
+			},
 		},
 		shield: {
 			url: "./img/shield.svg",
 			w: "60px",
+			do: () => {
+				playerData.water += 3;
+				if (playerData.water > 100) playerData.water = 100;
+
+				playerData.food += 3;
+				if (playerData.food > 100) playerData.food = 100;
+			},
 		},
 		littleAlien: {
 			url: "./img/littleAlien.svg",
 			w: "100px",
+			do: () => {
+				playerData.health -= 5;
+				if (playerData.health < 0) playerData.health = 0;
+			},
 		},
 		bigAlien: {
 			url: "./img/bigAlien.svg",
 			w: "100px",
+			do: () => {
+				playerData.health -= 15;
+				if (playerData.health < 0) playerData.health = 0;
+			},
 		},
 		box: {
 			url: "./img/box.svg",
 			w: "40px",
+			do: () => {
+				let random = Math.floor(Math.random() * 4);
+
+				switch (random) {
+					case 0:
+						playerData.food += 3;
+						if (playerData.food > 100) playerData.food = 100;
+						break;
+					case 1:
+						playerData.water += 6;
+						if (playerData.water > 100) playerData.water = 100;
+						break;
+					case 2:
+						playerData.health += 20;
+						if (playerData.health > 100) playerData.health = 100;
+						break;
+					case 3:
+						playerData.health -= 20;
+						if (playerData.health < 0) playerData.health = 0;
+						break;
+				}
+			},
 		},
+	};
+
+	let playerData = {
+		health: 100,
+		food: 100,
+		water: 100,
+		score: 0,
 	};
 
 	return {
@@ -42,6 +94,9 @@ const dataController = (() => {
 		},
 		getObjectsData: () => {
 			return objectsData;
+		},
+		getPlayerData: () => {
+			return playerData;
 		},
 	};
 })();
@@ -61,11 +116,17 @@ const UIController = (() => {
 		handsE: "hands",
 		handsAnim: "move-hands",
 		deleteE: "delete-element",
+		foodBar: "foodProgress",
+		waterBar: "waterProgress",
+		healthBar: "healthProgress",
+		gameOverE: "gameOverContainer",
+		volumeE: "volume",
+		scoreE: ".score-container",
 	};
 
 	let hands = document.getElementById(DOMStrings.handsE);
 
-	const spawn = (data) => {
+	const spawn = (data, playerData) => {
 		let spawnContainer = document.querySelector(DOMStrings.spawnContainer);
 		let object = document.createElement("img");
 		let randomPosX = Math.floor(Math.random() * 60) + 20; //20% - 80%;
@@ -83,6 +144,9 @@ const UIController = (() => {
 
 		//HANDS ANIMATION
 		object.addEventListener("click", (e) => {
+			data[randomKey].do();
+			updateUI(playerData);
+
 			e.target.parentNode.removeChild(e.target);
 			hands.classList.add("move-hands");
 			setTimeout(() => {
@@ -98,6 +162,29 @@ const UIController = (() => {
 		object.classList.add(DOMStrings.deleteE);
 		spawnContainer.appendChild(object);
 	};
+
+	const updateUI = (data) => {
+		let health = document.getElementById(DOMStrings.healthBar),
+			food = document.getElementById(DOMStrings.foodBar),
+			water = document.getElementById(DOMStrings.waterBar);
+
+		health.value = `${data.health}`;
+		food.value = `${data.food}`;
+		water.value = `${data.water}`;
+	};
+
+	const gameOverUI = (statsInt, healthInt) => {
+		let container = document.getElementById(DOMStrings.gameOverE);
+		container.style.display = "block";
+		clearInterval(spawnInterval);
+		clearInterval(statsInt);
+		clearInterval(healthInt);
+		clearInterval(scoreInterval);
+	};
+
+	//INTERVALS
+	let spawnInterval;
+	let scoreInterval;
 
 	return {
 		UIinit: () => {
@@ -121,17 +208,28 @@ const UIController = (() => {
 				let p = document.createElement("p");
 				p.textContent = data[key].name + data[key].info;
 
-				if (key == "temperature") p.textContent += " C°";
+				if (key == "temperature") p.textContent += " °F";
 
 				fragment.appendChild(p);
 			});
 
 			container.appendChild(fragment);
 		},
-		spawnObject: (data) => {
-			setInterval(() => {
-				spawn(data);
+		spawnObject: (data, playerData) => {
+			spawnInterval = setInterval(() => {
+				spawn(data, playerData);
 			}, 4000);
+
+			scoreInterval = setInterval(() => {
+				playerData.score++;
+				document.querySelector(
+					DOMStrings.scoreE
+				).innerHTML = `<p>Score: ${playerData.score}</p>`;
+			}, 1000);
+		},
+		updateStatsUI: (data, stats, health) => {
+			updateUI(data);
+			if (data.health <= 0) gameOverUI(stats, health);
 		},
 	};
 })();
@@ -141,6 +239,11 @@ const controller = ((UI, DATA) => {
 	const DOM = UI.getDOM();
 	const marsData = DATA.getMarsData();
 	const objectsData = DATA.getObjectsData();
+	const playerData = DATA.getPlayerData();
+
+	//INTERVALS
+	let statsInterval;
+	let healthInterval;
 
 	const addEvents = () => {
 		//START THE GAME
@@ -154,7 +257,31 @@ const controller = ((UI, DATA) => {
 			body.style.backgroundSize = "180px 180px";
 			gameContainer.style.display = "block";
 			UI.setMarsDataUI(marsData);
-			UI.spawnObject(objectsData);
+			UI.spawnObject(objectsData, playerData);
+			managePlayerStats();
+			document.querySelector(DOM.scoreE).style.display = "flex";
+		});
+
+		let audio = new Audio("./sounds/bitSpace.mp3");
+		audio.loop = true;
+		let ready = false;
+
+		audio.addEventListener("canplaythrough", () => {
+			audio.play();
+			ready = true;
+		});
+
+		document.getElementById(DOM.volumeE).addEventListener("click", (e) => {
+			let target = e.target;
+			if (target.classList[1].includes("up") && ready) {
+				target.classList.remove("fa-volume-up");
+				target.classList.add("fa-volume-mute");
+				audio.pause();
+			} else if (ready) {
+				target.classList.remove("fa-volume-mute");
+				target.classList.add("fa-volume-up");
+				audio.play();
+			}
 		});
 	};
 
@@ -169,6 +296,27 @@ const controller = ((UI, DATA) => {
 			marsData.date = obj.currentDate;
 			marsData.season = obj.season;
 		}
+	};
+
+	const managePlayerStats = () => {
+		statsInterval = setInterval(() => {
+			playerData.food -= 3;
+			playerData.water -= 6;
+			UI.updateStatsUI(playerData, statsInterval, healthInterval);
+		}, 3000);
+
+		healthInterval = setInterval(() => {
+			if (playerData.food <= 10 || playerData.water <= 10) {
+				playerData.health -= 20;
+			} else if (playerData.food <= 50 || playerData.water <= 50) {
+				playerData.health -= 10;
+			} else {
+				playerData.health -= 5;
+			}
+			UI.updateStatsUI(playerData, statsInterval, healthInterval);
+		}, 9000);
+
+		UI.updateStatsUI(playerData, statsInterval, healthInterval);
 	};
 
 	return {

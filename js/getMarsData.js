@@ -1,18 +1,25 @@
 const getMarsData = async () => {
 	try {
 		let obj = await fetch(
-			"https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0"
+			"https://api.nasa.gov/insight_weather/?api_key=Zl2IWXW5Yzn5aBXakvxptsiGtUnFCORaVFmYxhZK&feedtype=json&ver=1.0?"
 		);
 		let json = await obj.json();
 
 		if (!obj.ok) throw { status: obj.status, statusText: obj.statusText };
 
 		let sol = json["652"];
+		let currentDate = new Date();
+		currentDate =
+			currentDate.getFullYear() +
+			"-" +
+			(currentDate.getMonth() + 1) +
+			"-" +
+			currentDate.getDate();
 
 		return {
 			currentDate: {
 				name: "Date: ",
-				info: sol.Last_UTC.substring(0, 10),
+				info: currentDate,
 			},
 			season: {
 				name: "Season: ",
@@ -20,7 +27,7 @@ const getMarsData = async () => {
 			},
 			temperature: {
 				name: "Temperature: ",
-				info: ((sol.AT.av - 32) * (5 / 9)).toFixed(2),
+				info: sol.AT.av.toFixed(1),
 			},
 		};
 	} catch (err) {

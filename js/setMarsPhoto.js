@@ -1,9 +1,10 @@
 const setPhoto = async (elements) => {
 	try {
 		let obj = await fetch(
-			"http://mars-photos.herokuapp.com/api/v1/rovers/curiosity/photos?sol=1000"
+			"https://mars-photos.herokuapp.com/api/v1/rovers/curiosity/photos?sol=1000?api_key=Zl2IWXW5Yzn5aBXakvxptsiGtUnFCORaVFmYxhZK"
 		);
 		let res = await obj.json();
+		//http://mars-photos.herokuapp.com/api/v1/rovers/curiosity/photos?sol=1000
 
 		if (!obj.ok) throw { status: obj.status, statusText: obj.statusText };
 

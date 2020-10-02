@@ -16,6 +16,8 @@ body {
   font-family: "Tomorrow", sans-serif;
   transition: 1s all ease-in;
   background: white;
+  position: relative;
+  overflow: hidden;
 }
 
 a {
@@ -203,6 +205,9 @@ main .icons-container a:hover {
   height: 16px;
   width: auto;
 }
+.game-container .player-game-info div #healthIcon img {
+  height: 12px;
+}
 .game-container .player-game-info div progress {
   min-width: 250px;
   height: 16px;
@@ -224,6 +229,66 @@ main .icons-container a:hover {
 .game-container .player-game-info div #healthProgress::-webkit-progress-bar {
   background: #ca2727;
   border-radius: 5px;
+}
+
+/* SCORE CONTAINER */
+.score-container {
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  right: 20px;
+  top: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.score-container p {
+  color: lightgray;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* GAME OVER CONTAINER */
+.game-over-container {
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.2s all ease-in;
+  display: none;
+}
+.game-over-container div {
+  background: lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+.game-over-container div a {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 7px 12px;
+  color: lightgray;
+  transition: 0.2s all ease-in;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-top: 15px;
+  font-size: 1.3rem;
+}
+.game-over-container div a:hover {
+  background: lightgray;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 1.5rem;
 }
 
 /* ANIMATIONS */
@@ -267,10 +332,31 @@ main .icons-container a:hover {
 
 .delete-element {
   animation-name: deleteElement;
-  animation-duration: 20s;
+  animation-duration: 15s;
   animation-timing-function: linear;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+/* RESPONSIVE MOBILE */
+@media screen and (max-width: 700px) {
+  /* MAIN STYLES */
+  html {
+    font-size: 12px;
+  }
+
+  .game-over-container div {
+    width: 80%;
+    text-align: center;
+  }
+
+  .game-container #hands {
+    height: 200px;
+    transform: translateX(-50%) scale(2);
+  }
+  .game-container .object-spawner-container {
+    top: 200px;
+  }
 }
 
 /*# sourceMappingURL=mains.css.map */
