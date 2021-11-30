@@ -1,118 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>My Life At Mars | By Sebery</title>
-		<!-- STYLES -->
-		<link rel="stylesheet" href="css/mains.css" />
-		<!-- FONTS -->
-		<link
-			href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,400;1,600;1,700&display=swap"
-			rel="stylesheet"
-		/>
-	</head>
-	<body>
-		<!-- LOADING CONTAINER -->
-		<div class="loading-container">
-			<i class="fas fa-spinner"></i>
-		</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Life At Mars | By Sebery</title>
+    <!-- STYLES -->
+    <link rel="stylesheet" href="css/mains.css" />
+    <!-- FONTS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- LOADING CONTAINER -->
+    <div class="loading-container">
+      <i class="fas fa-spinner"></i>
+    </div>
 
-		<!-- ERROR LOADING CONTAINER -->
-		<div class="error-loading-container">
-			<div>
-				<p></p>
-				<a id="restart-btn" href="index.html">Restart</a>
-			</div>
-		</div>
+    <!-- ERROR LOADING CONTAINER -->
+    <div class="error-loading-container">
+      <div>
+        <p></p>
+        <a id="restart-btn" href="index.html">Restart</a>
+      </div>
+    </div>
 
-		<!-- MAIN SECTION -->
-		<main>
-			<h1>My Life At<br />Mars</h1>
+    <!-- MAIN SECTION -->
+    <main>
+      <h1>My Life At<br />Mars</h1>
 
-			<a id="start-btn" href="#">Let's start</a>
+      <a id="start-btn" href="#">Let's start</a>
 
-			<div class="icons-container">
-				<a id="volume" href="#"><i class="fas fa-volume-up"></i></a>
-				<a
-					href="https://github.com/Sebery/my-life-at-mars"
-					target="_blank"
-					rel="noopener"
-					><i class="fab fa-github"></i
-				></a>
-				<a href="https://twitter.com/sebery_dev" target="_blank" rel="noopener"
-					><i class="fab fa-twitter"></i
-				></a>
-			</div>
-		</main>
+      <div class="icons-container">
+        <a id="volume" href="#"><i class="fas fa-volume-up"></i></a>
+        <a
+          href="https://github.com/seberydev"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a
+          href="https://twitter.com/seberydev"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><i class="fab fa-twitter"></i
+        ></a>
+      </div>
+    </main>
 
-		<!-- GAME CONTAINER -->
-		<div class="game-container">
-			<div class="object-spawner-container"></div>
-			<div class="sol-info"></div>
-			<img id="hands" src="img/hands.svg" alt="Your Hands" />
+    <!-- GAME CONTAINER -->
+    <div class="game-container">
+      <div class="object-spawner-container"></div>
+      <div class="sol-info"></div>
+      <img id="hands" src="img/hands.svg" alt="Your Hands" />
 
-			<div class="player-game-info">
-				<div>
-					<label for="foodProgress"
-						><img src="img/bottle.svg" alt="Food Progress Icon"
-					/></label>
-					<progress
-						value="50"
-						max="100"
-						name="foodProgress"
-						id="foodProgress"
-					></progress>
-				</div>
+      <div class="player-game-info">
+        <div>
+          <label for="foodProgress"
+            ><img src="img/bottle.svg" alt="Food Progress Icon"
+          /></label>
+          <progress
+            value="50"
+            max="100"
+            name="foodProgress"
+            id="foodProgress"
+          ></progress>
+        </div>
 
-				<div>
-					<label for="waterProgress"
-						><img src="img/water.svg" alt="Water Progress Icon"
-					/></label>
-					<progress
-						value="75"
-						max="100"
-						name="waterProgress"
-						id="waterProgress"
-					></progress>
-				</div>
+        <div>
+          <label for="waterProgress"
+            ><img src="img/water.svg" alt="Water Progress Icon"
+          /></label>
+          <progress
+            value="75"
+            max="100"
+            name="waterProgress"
+            id="waterProgress"
+          ></progress>
+        </div>
 
-				<div>
-					<label id="healthIcon" for="healthProgress"
-						><img src="img/heart.svg" alt="Water Progress Icon"
-					/></label>
-					<progress
-						name="healthProgress"
-						value="80"
-						max="100"
-						id="healthProgress"
-					></progress>
-				</div>
-			</div>
-		</div>
+        <div>
+          <label id="healthIcon" for="healthProgress"
+            ><img src="img/heart.svg" alt="Water Progress Icon"
+          /></label>
+          <progress
+            name="healthProgress"
+            value="80"
+            max="100"
+            id="healthProgress"
+          ></progress>
+        </div>
+      </div>
+    </div>
 
-		<!-- SCORE CONTAINER -->
-		<div class="score-container">
-			<p>Score: 0</p>
-		</div>
+    <!-- SCORE CONTAINER -->
+    <div class="score-container">
+      <p>Score: 0</p>
+    </div>
 
-		<!-- GAME OVER CONTAINER -->
-		<div id="gameOverContainer" class="game-over-container">
-			<div>
-				<h1>GAME OVER</h1>
-				<a href="index.html">Main Menu</a>
-			</div>
-		</div>
+    <!-- GAME OVER CONTAINER -->
+    <div id="gameOverContainer" class="game-over-container">
+      <div>
+        <h1>GAME OVER</h1>
+        <a href="index.html">Main Menu</a>
+      </div>
+    </div>
 
-		<!-- SCRIPTS -->
-		<script type="module" src="js/main.js"></script>
-		<script
-			src="https://kit.fontawesome.com/00a4efd493.js"
-			crossorigin="anonymous"
-		></script>
-	</body>
+    <!-- SCRIPTS -->
+    <script type="module" src="js/main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/00a4efd493.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
